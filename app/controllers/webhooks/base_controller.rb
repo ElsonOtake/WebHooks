@@ -3,6 +3,13 @@ class Webhooks::BaseController < ApplicationController
   skip_forgery_protection
   
   def create
+    InboundWebhook.create!(body: payload)
     head :ok
+  end
+
+  private
+
+  def payload
+    @payload ||= request.body.read
   end
 end
